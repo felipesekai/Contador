@@ -21,9 +21,9 @@ const UserEdit = ({ color, size, userName }) => {
     }
 
     return (
-        <Button variant="ghost" onLongPress={onOpen} position='absolute' top={'5'} right={'0'}>
-            <Container>               
-                    <MaterialIcons name='face' color={'green'} size={25} />                
+        <Button variant="ghost" onLongPress={onOpen} position='absolute' top={'0.5'} right={'0'}>
+            <Container>
+                <MaterialIcons name='face' color={'green'} size={25} />
                 <Text fontSize={12} >{userName && userName}</Text>
                 <EditUserActionSheet isOpen={isOpen} onClose={onClose} alterName={handleNameChange} />
             </Container>

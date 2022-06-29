@@ -10,7 +10,7 @@ export default function User() {
 
     const [formData, setFormData] = useState({});
     const [errors, setErrors] = useState({});
-    const { setUser, entryWithoutLogin } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
 
     function verification() {
         if (formData.name === undefined) {

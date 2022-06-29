@@ -6,9 +6,14 @@ import { host, heroku, JOIN, INCREMENT, RESET } from '../../.envi';
 
 export const AuthContext = createContext({});
 
+type userModel = {
+    username: string,
+
+}
+
 const Context = ({ children }) => {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<userModel | null >(null);
     const client = ws(`${host}/count`);
     const [count, setCount] = useState(0);
 
@@ -37,7 +42,7 @@ const Context = ({ children }) => {
 
     function handleIncrementOrDecrement() {
         try {
-            if (user.name) {
+            if (user.username) {
                 send(INCREMENT);
             }
 
@@ -50,9 +55,9 @@ const Context = ({ children }) => {
 
     function reset() {
         try {
-            if (user.name) {
+            if (user.username) {
                 client.send(
-                    JSON.stringify({ type: RESET, name: user.name })
+                    JSON.stringify({ type: RESET, name: user.username })
                 )
             }
         } catch (e) {
@@ -60,29 +65,25 @@ const Context = ({ children }) => {
         }
 
     }
-
     function open() {
         client.onopen = (ev) => {
             console.log('connected');
             send(JOIN);
         }
     }
-
     function close() {
         client.onclose = (e) => {
 
         }
     }
-
     function send(type) {
 
         client.send(
-            JSON.stringify({ type: type, name: user.name })
+            JSON.stringify({ type: type, name: user.username })
         )
 
 
     }
-
     function message() {
         client.onmessage = (ev) => {
             console.log(ev.data)
@@ -97,11 +98,9 @@ const Context = ({ children }) => {
     function error() {
         client.onerror = (ev) => {
             console.log(ev)
-            alert('conexão perdida!!')
 
         }
     }
-
     function reconnect() {
         client.onreconnect = (ev) => {
             console.log(ev)
@@ -111,8 +110,8 @@ const Context = ({ children }) => {
 
     function alterUser(userName) {
         client.close();
-        setUser({ name: userName });
-        saveUser({ name: userName });
+        setUser({ username: userName });
+        saveUser({ username: userName });
 
     }
 
